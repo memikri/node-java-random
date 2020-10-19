@@ -1,5 +1,5 @@
 declare class Random {
-  constructor(seed?: bigint);
+  constructor(seed: bigint);
   setSeed(seed: bigint): void;
   next(bits: number): number;
   nextBytes(buffer: Uint8Array, n: number): void;
