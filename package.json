@@ -1,6 +1,6 @@
 {
   "name": "node-java-random",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Complete implementation of java.util.random in C++ and Node.js",
   "main": "index.js",
   "types": "index.d.ts",
