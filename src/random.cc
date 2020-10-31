@@ -89,13 +89,24 @@ Napi::Value Random::NextBytes(const Napi::CallbackInfo &info) {
 
   int length = info.Length();
 
-  if (length != 1 || !info[0].IsBuffer()) {
-    Napi::TypeError::New(env, "Expected a buffer").ThrowAsJavaScriptException();
+  if (length != 2) {
+    Napi::TypeError::New(env, "Invalid arguments").ThrowAsJavaScriptException();
     return env.Null();
   }
 
-  Napi::Buffer<uint8_t> buffer = info[0].As<Napi::Buffer<uint8_t>>();
-  size_t byteLength = buffer.Length();
+  if (!info[0].IsTypedArray()) {
+    Napi::TypeError::New(env, "Expected a typed array").ThrowAsJavaScriptException();
+    return env.Null();
+  }
+  Napi::Uint8Array buffer = info[0].As<Napi::Uint8Array>();
+
+  if (!info[1].IsNumber()) {
+    Napi::TypeError::New(env, "Expected a number length").ThrowAsJavaScriptException();
+    return env.Null();
+  }
+  Napi::Number lengthArg = info[1].As<Napi::Number>();
+
+  int32_t byteLength = lengthArg.Int32Value();
 
   _random.nextBytes(buffer.Data(), byteLength);
 
